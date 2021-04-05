@@ -1,6 +1,5 @@
 package cn.hll520.queryfilter.entiry;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
 public class QueryFilterException extends RuntimeException {
     /**
      * 详情信息
