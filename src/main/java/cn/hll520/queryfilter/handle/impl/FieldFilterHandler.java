@@ -6,7 +6,6 @@ import cn.hll520.queryfilter.entiry.QueryFilterException;
 import cn.hll520.queryfilter.term.ITermFilter;
 import org.springframework.stereotype.Component;
 
-
 import java.util.List;
 
 import static cn.hll520.queryfilter.tools.CheckSQLTools.checkSQLFilter;
@@ -84,7 +83,7 @@ public class FieldFilterHandler {
         operator = operator == null ? Operate.like : operator;
 
         // 添加条件
-        sql.append(filedFilter.acquireFieldName());
+        sql.append("`").append(filedFilter.acquireFieldName()).append("`");
         // 添加操作
         switch (operator) {
             case eq:

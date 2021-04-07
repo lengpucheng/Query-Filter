@@ -1,5 +1,8 @@
 package cn.hll520.queryfilter.term;
 
+import cn.hll520.queryfilter.fieldmap.IFieldMap;
+
+
 /**
  * 描述： 用于标记条件
  *
@@ -8,4 +11,52 @@ package cn.hll520.queryfilter.term;
  * @since 2021/4/5-下午5:26
  */
 public interface ITerm {
+
+    /**
+     * 全量条件
+     *
+     * @return 全量条件
+     */
+    static IQueryFilter queryFilter() {
+        return IQueryFilter.build();
+    }
+
+    /**
+     * 排序
+     *
+     * @return 排序条件
+     */
+    static ITermSort sort() {
+        return ITermSort.build();
+    }
+
+    /**
+     * 过滤
+     *
+     * @return 过滤条件
+     */
+    static ITermFilter filter() {
+        return ITermFilter.build();
+    }
+
+    /**
+     * 分页
+     *
+     * @param pageNum  页数
+     * @param pageSize 每页大小
+     * @return 条件
+     */
+    static ITermPage page(int pageNum, int pageSize) {
+        return ITermPage.build(pageNum, pageSize);
+    }
+
+    /**
+     * 转换字段
+     *
+     * @param map 字段转换接口
+     * @return 转换后的this
+     */
+    default ITerm fieldMap(IFieldMap map) {
+        return this;
+    }
 }

@@ -3,8 +3,8 @@ package cn.hll520.queryfilter.tools;
 import cn.hll520.queryfilter.entiry.IFieldFilter;
 import cn.hll520.queryfilter.entiry.IFieldSort;
 import cn.hll520.queryfilter.fieldmap.IFieldMap;
+import cn.hll520.queryfilter.term.IQueryFilter;
 import cn.hll520.queryfilter.term.ITermFilter;
-import cn.hll520.queryfilter.term.ITermQuery;
 import cn.hll520.queryfilter.term.ITermSort;
 
 import java.util.List;
@@ -21,16 +21,16 @@ public class FieldMapTools {
     /**
      * 全量条件转换
      *
-     * @param fieldMap  转换接口
-     * @param termQuery 全量条件
+     * @param fieldMap    转换接口
+     * @param queryFilter 全量条件
      * @return 转换后的条件
      */
-    public static ITermQuery map(IFieldMap fieldMap, ITermQuery termQuery) {
-        if (termQuery != null) {
-            map(fieldMap, (ITermFilter) termQuery);
-            map(fieldMap, (ITermSort) termQuery);
+    public static IQueryFilter map(IFieldMap fieldMap, IQueryFilter queryFilter) {
+        if (queryFilter != null) {
+            map(fieldMap, (ITermFilter) queryFilter);
+            map(fieldMap, (ITermSort) queryFilter);
         }
-        return termQuery;
+        return queryFilter;
     }
 
     /**

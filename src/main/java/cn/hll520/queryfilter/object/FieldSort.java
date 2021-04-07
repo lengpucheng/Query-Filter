@@ -24,6 +24,14 @@ public class FieldSort implements IFieldSort {
      */
     private SortTerm sort;
 
+    public FieldSort() {
+    }
+
+    public FieldSort(String filed, SortTerm sort) {
+        this.filed = filed;
+        this.sort = sort;
+    }
+
     /**
      * 获取待排序字段名称
      *

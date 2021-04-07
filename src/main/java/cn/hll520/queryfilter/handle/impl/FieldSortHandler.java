@@ -70,7 +70,7 @@ public class FieldSortHandler {
             sql.append(" , ");
         }
         // 排序字段
-        sql.append(fieldSort.acquireFieldName());
+        sql.append("`").append(fieldSort.acquireFieldName()).append("`");
         // 排序方式
         if (fieldSort.acquireSortTerm() != null) {
             sql.append(" ").append(fieldSort.acquireSortTerm());

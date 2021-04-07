@@ -25,6 +25,14 @@ public class TermPage implements ITermPage {
      */
     private Long total;
 
+    public TermPage() {
+    }
+
+    public TermPage(Integer pageNum, Integer pageSize) {
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+    }
+
     /**
      * 获取当前页数
      *
@@ -53,5 +61,19 @@ public class TermPage implements ITermPage {
     @Override
     public void receiveTotal(Long total) {
         this.setTotal(total);
+    }
+
+    /**
+     * 初始化分页属性
+     *
+     * @param pageNum  页数
+     * @param pageSize 每页大小
+     * @return this
+     */
+    @Override
+    public ITermPage initializePage(int pageNum, int pageSize) {
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+        return this;
     }
 }

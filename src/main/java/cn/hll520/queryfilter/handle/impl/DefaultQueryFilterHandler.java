@@ -70,9 +70,9 @@ public class DefaultQueryFilterHandler implements IQueryFilterHandler {
         // 如果条件为null 不做处理
         if (term == null) {
             return sql;
-        } else if (term instanceof ITermQuery) {
+        } else if (term instanceof IQueryFilter) {
             // 如果是全量条件
-            return enhanceQuerySQL((ITermQuery) term, sql);
+            return enhanceQuerySQL((IQueryFilter) term, sql);
         } else if (term instanceof ITermFilter) {
             // 如果是字段过滤条件
             return fieldFilterHandler.enhanceFilterSQL((ITermFilter) term, sql);
@@ -96,7 +96,7 @@ public class DefaultQueryFilterHandler implements IQueryFilterHandler {
      * @param sql  待增强sql语句
      * @return 增强后的sql语句
      */
-    private String enhanceQuerySQL(ITermQuery term, String sql) {
+    private String enhanceQuerySQL(IQueryFilter term, String sql) {
         if (term == null) {
             return sql;
         }

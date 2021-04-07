@@ -2,14 +2,12 @@ package cn.hll520.queryfilter.object;
 
 import cn.hll520.queryfilter.entiry.IFieldFilter;
 import cn.hll520.queryfilter.entiry.IFieldSort;
-import cn.hll520.queryfilter.fieldmap.IFieldMap;
-import cn.hll520.queryfilter.term.ITermQuery;
+import cn.hll520.queryfilter.term.IQueryFilter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static cn.hll520.queryfilter.tools.FieldMapTools.map;
 
 /**
  * 描述： 默认全量条件过滤
@@ -20,15 +18,15 @@ import static cn.hll520.queryfilter.tools.FieldMapTools.map;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class QueryFilter extends TermPage implements ITermQuery {
+public class QueryFilter extends TermPage implements IQueryFilter {
     /**
      * 字段排序条件集
      */
-    private List<IFieldSort> sorts;
+    private List<IFieldSort> sorts = new ArrayList<>();
     /**
      * 字段过滤条件集
      */
-    private List<IFieldFilter> filters;
+    private List<IFieldFilter> filters = new ArrayList<>();
 
     /**
      * 获取过滤条件
@@ -51,12 +49,15 @@ public class QueryFilter extends TermPage implements ITermQuery {
     }
 
     /**
-     * 转换字段
+     * 初始化分页参数
      *
-     * @param map 字段转换接口
-     * @return 转换后的this
+     * @param pageNum  页数
+     * @param pageSize 每页大小
+     * @return this
      */
-    public ITermQuery fieldMap(IFieldMap map) {
-        return map(map, this);
+    @Override
+    public IQueryFilter initializePage(int pageNum, int pageSize) {
+        return (IQueryFilter) super.initializePage(pageNum, pageSize);
     }
+
 }

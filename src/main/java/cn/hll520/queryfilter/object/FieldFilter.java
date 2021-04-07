@@ -28,6 +28,15 @@ public class FieldFilter implements IFieldFilter {
      */
     private String value;
 
+    public FieldFilter() {
+    }
+
+    public FieldFilter(String field, Operate operate, String value) {
+        this.field = field;
+        this.operate = operate;
+        this.value = value;
+    }
+
     /**
      * 获取待过滤字段名称
      *
