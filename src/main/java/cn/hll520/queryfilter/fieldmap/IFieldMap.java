@@ -20,9 +20,14 @@ public interface IFieldMap {
     default String fieldMap(String fieldName) {
         Map<String, String> map = this.fieldMap(new HashMap<>());
         if (map.containsKey(fieldName)) {
-            return map.get(fieldName);
+            return (fieldPrefix() == null ? "" : fieldPrefix())
+                    + map.get(fieldName)
+                    + (fieldSuffix() == null ? "" : fieldSuffix());
+
         }
-        return defaultMap(fieldName);
+        return (fieldPrefix() == null ? "" : fieldPrefix())
+                + defaultMap(fieldName)
+                + (fieldSuffix() == null ? "" : fieldSuffix());
     }
 
     /**
@@ -46,5 +51,23 @@ public interface IFieldMap {
      */
     default String defaultMap(String fieldName) {
         return fieldName;
+    }
+
+    /**
+     * 添加字段前缀
+     *
+     * @return 前缀
+     */
+    default String fieldPrefix() {
+        return null;
+    }
+
+    /**
+     * 添加字段后缀
+     *
+     * @return 后缀
+     */
+    default String fieldSuffix() {
+        return null;
     }
 }
