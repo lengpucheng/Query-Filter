@@ -15,7 +15,7 @@ import java.util.Properties;
 /**
  * 描述： SQL插件拦截器
  * <p>拦截单参数为 {@link ITerm} 的查询语句</p>
- * <p>拦截多尝试中包含 参数名为 queryFilter 切类型为{@link ITerm}的语句</p>
+ * <p>拦截多尝试中包含 参数名为 <b>queryFilter</b> 且类型为{@link ITerm}的语句</p>
  *
  * @author lpc
  * @version 1.0 2021/4/5
