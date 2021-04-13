@@ -1,10 +1,10 @@
 package cn.hll520.queryfilter.term;
 
-import cn.hll520.queryfilter.entiry.IFieldFilter;
-import cn.hll520.queryfilter.entiry.Operate;
 import cn.hll520.queryfilter.fieldmap.IFieldMap;
-import cn.hll520.queryfilter.object.FieldFilter;
-import cn.hll520.queryfilter.object.TermFilter;
+import cn.hll520.queryfilter.term.entiry.FieldFilter;
+import cn.hll520.queryfilter.term.entiry.IFieldFilter;
+import cn.hll520.queryfilter.term.entiry.Operate;
+import jdk.nashorn.internal.objects.annotations.Function;
 
 import java.util.List;
 
@@ -24,6 +24,7 @@ public interface ITermFilter extends ITerm {
      *
      * @return 过滤条件集合 可null
      */
+    @Function
     List<IFieldFilter> acquireTermFilters();
 
 

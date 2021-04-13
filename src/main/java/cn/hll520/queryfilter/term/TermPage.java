@@ -1,6 +1,5 @@
-package cn.hll520.queryfilter.object;
+package cn.hll520.queryfilter.term;
 
-import cn.hll520.queryfilter.term.ITermPage;
 import lombok.Data;
 
 /**

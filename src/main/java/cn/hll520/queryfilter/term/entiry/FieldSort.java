@@ -1,7 +1,4 @@
-package cn.hll520.queryfilter.object;
-
-import cn.hll520.queryfilter.entiry.IFieldSort;
-import cn.hll520.queryfilter.entiry.SortTerm;
+package cn.hll520.queryfilter.term.entiry;
 import lombok.Data;
 
 /**

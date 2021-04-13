@@ -1,7 +1,5 @@
-package cn.hll520.queryfilter.object;
+package cn.hll520.queryfilter.term.entiry;
 
-import cn.hll520.queryfilter.entiry.IFieldFilter;
-import cn.hll520.queryfilter.entiry.Operate;
 import lombok.Data;
 
 /**

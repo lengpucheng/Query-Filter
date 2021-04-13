@@ -1,4 +1,4 @@
-package cn.hll520.queryfilter.entiry;
+package cn.hll520.queryfilter.term.entiry;
 
 /**
  * 描述： 过滤操作

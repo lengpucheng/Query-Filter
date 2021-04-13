@@ -1,7 +1,5 @@
 package cn.hll520.queryfilter.term;
 
-import cn.hll520.queryfilter.object.TermPage;
-
 /**
  * 描述： 条件分页接口
  *

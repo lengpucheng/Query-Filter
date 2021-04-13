@@ -1,9 +1,8 @@
 package cn.hll520.queryfilter.term;
 
-import cn.hll520.queryfilter.entiry.Operate;
-import cn.hll520.queryfilter.entiry.SortTerm;
 import cn.hll520.queryfilter.fieldmap.IFieldMap;
-import cn.hll520.queryfilter.object.QueryFilter;
+import cn.hll520.queryfilter.term.entiry.Operate;
+import cn.hll520.queryfilter.term.entiry.SortTerm;
 
 import static cn.hll520.queryfilter.tools.FieldMapTools.map;
 
@@ -15,14 +14,14 @@ import static cn.hll520.queryfilter.tools.FieldMapTools.map;
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午5:20
  */
-public interface IQueryFilter extends ITermFilter, ITermSort, ITermPage {
+public interface ITermQuery extends ITermFilter, ITermSort, ITermPage {
 
     /**
      * 默认构造一个空的查询过滤
      *
      * @return 查询过滤条件
      */
-    static IQueryFilter build() {
+    static ITermQuery build() {
         return new QueryFilter();
     }
 
@@ -33,7 +32,7 @@ public interface IQueryFilter extends ITermFilter, ITermSort, ITermPage {
      * @param pageSize 每页大小
      * @return this
      */
-    IQueryFilter initializePage(int pageNum, int pageSize);
+    ITermQuery initializePage(int pageNum, int pageSize);
 
     /**
      * 转换字段
@@ -41,7 +40,7 @@ public interface IQueryFilter extends ITermFilter, ITermSort, ITermPage {
      * @param map 字段转换接口
      * @return 转换后的this
      */
-    default IQueryFilter fieldMap(IFieldMap map) {
+    default ITermQuery fieldMap(IFieldMap map) {
         return map(map, this);
     }
 
@@ -52,8 +51,8 @@ public interface IQueryFilter extends ITermFilter, ITermSort, ITermPage {
      * @param sort      排序方法
      * @return this
      */
-    default IQueryFilter addFieldTerm(String fieldName, SortTerm sort) {
-        return (IQueryFilter) ITermSort.super.addFieldTerm(fieldName, sort);
+    default ITermQuery addFieldTerm(String fieldName, SortTerm sort) {
+        return (ITermQuery) ITermSort.super.addFieldTerm(fieldName, sort);
     }
 
     /**
@@ -64,7 +63,7 @@ public interface IQueryFilter extends ITermFilter, ITermSort, ITermPage {
      * @param value     内容
      * @return this
      */
-    default IQueryFilter addFieldTerm(String fieldName, Operate operate, String value) {
-        return (IQueryFilter) ITermFilter.super.addFieldTerm(fieldName, operate, value);
+    default ITermQuery addFieldTerm(String fieldName, Operate operate, String value) {
+        return (ITermQuery) ITermFilter.super.addFieldTerm(fieldName, operate, value);
     }
 }

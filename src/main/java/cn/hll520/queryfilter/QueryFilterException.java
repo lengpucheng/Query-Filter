@@ -1,4 +1,4 @@
-package cn.hll520.queryfilter.entiry;
+package cn.hll520.queryfilter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,9 +1,11 @@
 package cn.hll520.queryfilter.handle.impl;
 
+import cn.hll520.queryfilter.handle.IQueryFilterHandler;
+import cn.hll520.queryfilter.term.ITerm;
 import cn.hll520.queryfilter.term.ITermPage;
 import org.springframework.stereotype.Component;
 
-import static cn.hll520.queryfilter.tools.SQLHandleTools.removeBranch;
+import java.sql.Connection;
 
 /**
  * 描述： 分页处理器
@@ -15,37 +17,35 @@ import static cn.hll520.queryfilter.tools.SQLHandleTools.removeBranch;
  * @since 2021/4/5-下午9:09
  */
 @Component
-public class PageFilterHandler {
+public class PageFilterHandler implements IQueryFilterHandler {
     /**
-     * 进行SQL语句分页增强
+     * 处理SQL语句
      *
-     * @param pageTerm 分页条件
-     * @param sql      sql语句
-     * @return 增强后的语句
+     * @param term       条件
+     * @param sql        sql语句
+     * @param connection 链接对象
      */
-    public String enhancePageSQL(ITermPage pageTerm, String sql) {
-        // 若为null就直接返回
-        if (pageTerm == null || sql == null) {
-            return sql;
+    @Override
+    public void handle(ITerm term, StringBuilder sql, Connection connection) {
+        if (!(term instanceof ITermPage)) {
+            return;
         }
+        ITermPage pageTerm = (ITermPage) term;
         // Todo 待反查出总数量
-        // 获取去除头尾空格和分号的 SQL 语句
-        StringBuilder sqlEdit = removeBranch(sql).append(" ");
+
         // 每页大小
         Integer size = pageTerm.acquireSize();
         if (size != null && size != -1) {
             size = size < 1 ? 1 : size;
-            sqlEdit.append(" limit ").append(size);
+            sql.append(" limit ").append(size);
             // 偏移量
             Integer pageNum = pageTerm.acquirePageNum();
             if (pageNum != null) {
                 // 小于1 视为 offset 去 abs绝对值  否则乘以大小进行分页
                 pageNum = pageNum < 1 ? Math.abs(pageNum) : (pageNum - 1) * size;
-                sqlEdit.append(" offset ").append(pageNum);
+                sql.append(" offset ").append(pageNum);
             }
         }
-        // 添加最后的;
-        sqlEdit.append(" ;");
-        return sqlEdit.toString();
+
     }
 }

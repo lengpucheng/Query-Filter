@@ -2,7 +2,9 @@ package cn.hll520.queryfilter;
 
 import cn.hll520.queryfilter.handle.IQueryFilterHandler;
 import cn.hll520.queryfilter.handle.InterceptorHandler;
+import cn.hll520.queryfilter.handle.impl.DefaultQueryFilterHandler;
 import cn.hll520.queryfilter.term.ITerm;
+import lombok.Data;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.plugin.*;
@@ -16,11 +18,13 @@ import java.util.Properties;
  * 描述： SQL插件拦截器
  * <p>拦截单参数为 {@link ITerm} 的查询语句</p>
  * <p>拦截多尝试中包含 参数名为 <b>queryFilter</b> 且类型为{@link ITerm}的语句</p>
+ * <p>默认使用{@link cn.hll520.queryfilter.handle.impl.DefaultQueryFilterHandler}</p>
  *
  * @author lpc
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午4:49
  */
+@Data
 @Component
 @Intercepts({
         @Signature(type = StatementHandler.class, method = "prepare",
@@ -31,18 +35,7 @@ public class QueryFilterInterceptor implements Interceptor {
     /**
      * 处理器
      */
-    private final IQueryFilterHandler handler;
-
-    /**
-     * 构造器 用于进行构造或自动注入
-     * <p>默认使用{@link cn.hll520.queryfilter.handle.impl.DefaultQueryFilterHandler}</p>
-     *
-     * @param handler 条件过滤处理器
-     */
-    public QueryFilterInterceptor(IQueryFilterHandler handler) {
-        this.handler = handler;
-    }
-
+    private final IQueryFilterHandler handler = new DefaultQueryFilterHandler();
 
     /**
      * 拦截 SQL 语句
@@ -84,7 +77,7 @@ public class QueryFilterInterceptor implements Interceptor {
             }
         }
         // 增强SQL
-        return handler.enhanceSQL(term, sql);
+        return handler.enhanceSQL(term, sql, null);
     }
 
     @Override

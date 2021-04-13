@@ -18,6 +18,7 @@ public interface IFieldMap {
      * @return 转换后的字段名称
      */
     default String fieldMap(String fieldName) {
+        fieldError(fieldName);
         Map<String, String> map = this.fieldMap(new HashMap<>());
         if (map.containsKey(fieldName)) {
             return (fieldPrefix() == null ? "" : fieldPrefix())
@@ -69,5 +70,14 @@ public interface IFieldMap {
      */
     default String fieldSuffix() {
         return null;
+    }
+
+    /**
+     * 字段错误处理
+     *
+     * @param field 字段
+     */
+    default void fieldError(String field) {
+
     }
 }

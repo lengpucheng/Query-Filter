@@ -1,11 +1,11 @@
 package cn.hll520.queryfilter.tools;
 
-import cn.hll520.queryfilter.entiry.IFieldFilter;
-import cn.hll520.queryfilter.entiry.IFieldSort;
 import cn.hll520.queryfilter.fieldmap.IFieldMap;
-import cn.hll520.queryfilter.term.IQueryFilter;
 import cn.hll520.queryfilter.term.ITermFilter;
+import cn.hll520.queryfilter.term.ITermQuery;
 import cn.hll520.queryfilter.term.ITermSort;
+import cn.hll520.queryfilter.term.entiry.IFieldFilter;
+import cn.hll520.queryfilter.term.entiry.IFieldSort;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class FieldMapTools {
      * @param queryFilter 全量条件
      * @return 转换后的条件
      */
-    public static IQueryFilter map(IFieldMap fieldMap, IQueryFilter queryFilter) {
+    public static ITermQuery map(IFieldMap fieldMap, ITermQuery queryFilter) {
         if (queryFilter != null) {
             map(fieldMap, (ITermFilter) queryFilter);
             map(fieldMap, (ITermSort) queryFilter);

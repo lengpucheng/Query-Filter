@@ -17,8 +17,8 @@ public interface ITerm {
      *
      * @return 全量条件
      */
-    static IQueryFilter queryFilter() {
-        return IQueryFilter.build();
+    static ITermQuery queryFilter() {
+        return ITermQuery.build();
     }
 
     /**

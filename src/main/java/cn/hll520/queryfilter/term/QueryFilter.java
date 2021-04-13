@@ -1,8 +1,7 @@
-package cn.hll520.queryfilter.object;
+package cn.hll520.queryfilter.term;
 
-import cn.hll520.queryfilter.entiry.IFieldFilter;
-import cn.hll520.queryfilter.entiry.IFieldSort;
-import cn.hll520.queryfilter.term.IQueryFilter;
+import cn.hll520.queryfilter.term.entiry.IFieldFilter;
+import cn.hll520.queryfilter.term.entiry.IFieldSort;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,7 +17,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class QueryFilter extends TermPage implements IQueryFilter {
+public class QueryFilter extends TermPage implements ITermQuery {
     /**
      * 字段排序条件集
      */
@@ -56,8 +55,8 @@ public class QueryFilter extends TermPage implements IQueryFilter {
      * @return this
      */
     @Override
-    public IQueryFilter initializePage(int pageNum, int pageSize) {
-        return (IQueryFilter) super.initializePage(pageNum, pageSize);
+    public ITermQuery initializePage(int pageNum, int pageSize) {
+        return (ITermQuery) super.initializePage(pageNum, pageSize);
     }
 
 }

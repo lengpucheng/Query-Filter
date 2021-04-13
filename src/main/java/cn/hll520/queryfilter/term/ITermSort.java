@@ -1,10 +1,10 @@
 package cn.hll520.queryfilter.term;
 
-import cn.hll520.queryfilter.entiry.IFieldSort;
-import cn.hll520.queryfilter.entiry.SortTerm;
 import cn.hll520.queryfilter.fieldmap.IFieldMap;
-import cn.hll520.queryfilter.object.FieldSort;
-import cn.hll520.queryfilter.object.TermSort;
+import cn.hll520.queryfilter.term.entiry.FieldSort;
+import cn.hll520.queryfilter.term.entiry.IFieldSort;
+import cn.hll520.queryfilter.term.entiry.SortTerm;
+import jdk.nashorn.internal.objects.annotations.Function;
 
 import java.util.List;
 
@@ -23,6 +23,7 @@ public interface ITermSort extends ITerm {
      *
      * @return 排序条件集 可null
      */
+    @Function
     List<IFieldSort> acquireTermSorts();
 
     /**

@@ -1,13 +1,15 @@
 package cn.hll520.queryfilter.handle.impl;
 
-import cn.hll520.queryfilter.entiry.IFieldSort;
+import cn.hll520.queryfilter.handle.IQueryFilterHandler;
+import cn.hll520.queryfilter.term.ITerm;
 import cn.hll520.queryfilter.term.ITermSort;
+import cn.hll520.queryfilter.term.entiry.IFieldSort;
 import org.springframework.stereotype.Component;
 
+import java.sql.Connection;
 import java.util.List;
 
 import static cn.hll520.queryfilter.tools.CheckSQLTools.checkSQLSort;
-import static cn.hll520.queryfilter.tools.SQLHandleTools.removeBranch;
 
 /**
  * 描述： 字段排序处理器
@@ -17,23 +19,21 @@ import static cn.hll520.queryfilter.tools.SQLHandleTools.removeBranch;
  * @since 2021/4/5-下午9:21
  */
 @Component
-public class FieldSortHandler {
-
+public class FieldSortHandler implements IQueryFilterHandler {
 
     /**
-     * 增强sql语句进行排序
+     * 处理SQL语句
      *
-     * @param sortTerm 排序条件集
-     * @param sql      待增强sql语句
-     * @return 增强后的sql语句
+     * @param term       条件
+     * @param sql        sql语句
+     * @param connection 链接对象
      */
-    public String enhanceSortSQL(ITermSort sortTerm, String sql) {
-        // 若为null就直接返回
-        if (sortTerm == null || sql == null) {
-            return sql;
+    @Override
+    public void handle(ITerm term, StringBuilder sql, Connection connection) {
+        if (!(term instanceof ITermSort)) {
+            return;
         }
-        // 获取去除头尾空格和分号的 SQL 语句
-        StringBuilder sqlEnhance = removeBranch(sql).append(" ");
+        ITermSort sortTerm = (ITermSort) term;
         // 获取排序条件集合
         List<IFieldSort> fieldSorts = sortTerm.acquireTermSorts();
         if (fieldSorts != null) {
@@ -41,12 +41,10 @@ public class FieldSortHandler {
             boolean isFist = true;
             for (IFieldSort fieldSort : fieldSorts) {
                 // 检验条件添加
-                isFist = !addSort(sqlEnhance, checkSQLSort(fieldSort), isFist) && isFist;
+                isFist = !addSort(sql, checkSQLSort(fieldSort), isFist) && isFist;
             }
         }
-        // 添加最后的;
-        sqlEnhance.append(" ;");
-        return sqlEnhance.toString();
+
     }
 
     /**
@@ -64,13 +62,13 @@ public class FieldSortHandler {
         }
         if (isFist) {
             // 如果是第一次添加 补充 order by 关键字
-            sql.append("order by ");
+            sql.append(" order by ");
         } else {
             // 否则 , 分割
             sql.append(" , ");
         }
-        // 排序字段
-        sql.append("`").append(fieldSort.acquireFieldName()).append("`");
+        // 排序字段 字段已经通过检查
+        sql.append(fieldSort.acquireFieldName());
         // 排序方式
         if (fieldSort.acquireSortTerm() != null) {
             sql.append(" ").append(fieldSort.acquireSortTerm());
@@ -78,5 +76,4 @@ public class FieldSortHandler {
         // 添加成功返回 true
         return true;
     }
-
 }

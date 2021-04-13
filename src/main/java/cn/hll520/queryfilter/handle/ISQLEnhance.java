@@ -1,6 +1,5 @@
 package cn.hll520.queryfilter.handle;
 
-import jdk.nashorn.internal.objects.annotations.Function;
 import org.apache.ibatis.mapping.SqlCommandType;
 
 /**
@@ -10,6 +9,7 @@ import org.apache.ibatis.mapping.SqlCommandType;
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午5:42
  */
+@FunctionalInterface
 public interface ISQLEnhance {
     /**
      * 增强sql
@@ -20,6 +20,5 @@ public interface ISQLEnhance {
      * @param methodName 方法名称
      * @return 增强后的SQL
      */
-    @Function
     String enhance(String sql, Object params, SqlCommandType type, String methodName);
 }

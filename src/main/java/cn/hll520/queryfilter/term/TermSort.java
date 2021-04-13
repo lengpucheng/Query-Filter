@@ -1,7 +1,6 @@
-package cn.hll520.queryfilter.object;
+package cn.hll520.queryfilter.term;
 
-import cn.hll520.queryfilter.entiry.IFieldSort;
-import cn.hll520.queryfilter.term.ITermSort;
+import cn.hll520.queryfilter.term.entiry.IFieldSort;
 import lombok.Data;
 
 import java.util.ArrayList;
