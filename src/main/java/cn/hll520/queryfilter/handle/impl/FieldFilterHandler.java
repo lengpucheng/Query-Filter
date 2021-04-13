@@ -6,7 +6,6 @@ import cn.hll520.queryfilter.term.ITerm;
 import cn.hll520.queryfilter.term.ITermFilter;
 import cn.hll520.queryfilter.term.entiry.IFieldFilter;
 import cn.hll520.queryfilter.term.entiry.Operate;
-import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.util.List;
@@ -22,7 +21,7 @@ import static cn.hll520.queryfilter.tools.SQLHandleTools.isWhere;
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午9:57
  */
-@Component
+@SuppressWarnings("all")
 public class FieldFilterHandler implements IQueryFilterHandler {
 
     /**
@@ -66,10 +65,10 @@ public class FieldFilterHandler implements IQueryFilterHandler {
             return false;
         }
 
-        // sql 语句 构造
-        if (isFist && !isWhere(sql)) {
-            // 如果是第一次添加并且非紧跟where 进行where 检查
-            checkContainWhere(sql);
+        // sql 语句 构造 是否添加 where
+        if (isFist && !isWhere(sql) && !checkContainWhere(sql)) {
+            // 如果是第一次添加并且非紧跟where 并且不包含 where
+            sql.append(" where ");
         } else {
             //  否则 添加 and
             sql.append(" and ");

@@ -56,13 +56,9 @@ public class SQLHandleTools {
      *
      * @param sql sql语句
      */
-    public static void checkContainWhere(StringBuilder sql) {
+    public static boolean checkContainWhere(StringBuilder sql) {
         // 如果包含就跳过
-        if (sql.toString().contains(" where")) {
-            return;
-        }
-        // 否则添加 where
-        sql.append(" where ");
+        return sql.toString().contains(" where ");
     }
 
 }

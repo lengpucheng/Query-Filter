@@ -14,11 +14,11 @@ public class TermPage implements ITermPage {
     /**
      * 页码
      */
-    private Integer pageNum;
+    private Long pageNum;
     /**
      * 每页大小
      */
-    private Integer pageSize;
+    private Long pageSize;
     /**
      * 总数
      */
@@ -27,10 +27,11 @@ public class TermPage implements ITermPage {
     public TermPage() {
     }
 
-    public TermPage(Integer pageNum, Integer pageSize) {
+    public TermPage(Long pageNum, Long pageSize) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }
+
 
     /**
      * 获取当前页数
@@ -38,7 +39,7 @@ public class TermPage implements ITermPage {
      * @return 当前页数
      */
     @Override
-    public Integer acquirePageNum() {
+    public Long acquirePageNum() {
         return this.getPageNum();
     }
 
@@ -48,7 +49,7 @@ public class TermPage implements ITermPage {
      * @return 每页大小
      */
     @Override
-    public Integer acquireSize() {
+    public Long acquireSize() {
         return this.getPageSize();
     }
 
@@ -70,7 +71,7 @@ public class TermPage implements ITermPage {
      * @return this
      */
     @Override
-    public ITermPage initializePage(int pageNum, int pageSize) {
+    public ITermPage initializePage(long pageNum, long pageSize) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
         return this;

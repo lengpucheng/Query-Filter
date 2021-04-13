@@ -1,9 +1,7 @@
 package cn.hll520.queryfilter.term;
 
 import cn.hll520.queryfilter.fieldmap.IFieldMap;
-import cn.hll520.queryfilter.term.entiry.FieldSort;
 import cn.hll520.queryfilter.term.entiry.IFieldSort;
-import cn.hll520.queryfilter.term.entiry.SortTerm;
 import jdk.nashorn.internal.objects.annotations.Function;
 
 import java.util.List;
@@ -17,35 +15,33 @@ import static cn.hll520.queryfilter.tools.FieldMapTools.map;
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午5:12
  */
-public interface ITermSort extends ITerm {
+public interface ITermSort<T extends IFieldSort> extends ITerm {
+    /**
+     * 默认构造一个空排序条件
+     *
+     * @return 排序条件
+     */
+    static TermSort build() {
+        return new TermSort();
+    }
+
     /**
      * 获取条件排序 条件集
      *
      * @return 排序条件集 可null
      */
     @Function
-    List<IFieldSort> acquireTermSorts();
+    List<T> acquireTermSorts();
 
     /**
-     * 默认构造一个空排序条件
+     * 添加一个排序条件
      *
-     * @return 排序条件
-     */
-    static ITermSort build() {
-        return new TermSort();
-    }
-
-    /**
-     * 添加单个排序条件
-     *
-     * @param fieldName 排序字段名称
-     * @param sort      排序方法
+     * @param t 排序条件
      * @return this
      */
-    default ITermSort addFieldTerm(String fieldName, SortTerm sort) {
-        List<IFieldSort> fieldSorts = this.acquireTermSorts();
-        if (fieldSorts != null) {
-            fieldSorts.add(new FieldSort(fieldName, sort));
+    default ITermSort<T> addFieldTerm(T t) {
+        if (acquireTermSorts() != null) {
+            acquireTermSorts().add(t);
         }
         return this;
     }
@@ -56,7 +52,13 @@ public interface ITermSort extends ITerm {
      * @param map 字段转换接口
      * @return 转换后的this
      */
-    default ITermSort fieldMap(IFieldMap map) {
-        return map(map, this);
+    default ITermSort<T> fieldMap(IFieldMap map) {
+        List<T> ts = acquireTermSorts();
+        if (ts != null && map != null) {
+            for (T t : ts) {
+                map(map, t);
+            }
+        }
+        return this;
     }
 }

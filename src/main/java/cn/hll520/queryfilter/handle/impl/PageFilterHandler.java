@@ -3,7 +3,6 @@ package cn.hll520.queryfilter.handle.impl;
 import cn.hll520.queryfilter.handle.IQueryFilterHandler;
 import cn.hll520.queryfilter.term.ITerm;
 import cn.hll520.queryfilter.term.ITermPage;
-import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 
@@ -16,7 +15,7 @@ import java.sql.Connection;
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午9:09
  */
-@Component
+@SuppressWarnings("all")
 public class PageFilterHandler implements IQueryFilterHandler {
     /**
      * 处理SQL语句
@@ -34,12 +33,12 @@ public class PageFilterHandler implements IQueryFilterHandler {
         // Todo 待反查出总数量
 
         // 每页大小
-        Integer size = pageTerm.acquireSize();
+        Long size = pageTerm.acquireSize();
         if (size != null && size != -1) {
             size = size < 1 ? 1 : size;
             sql.append(" limit ").append(size);
             // 偏移量
-            Integer pageNum = pageTerm.acquirePageNum();
+            Long pageNum = pageTerm.acquirePageNum();
             if (pageNum != null) {
                 // 小于1 视为 offset 去 abs绝对值  否则乘以大小进行分页
                 pageNum = pageNum < 1 ? Math.abs(pageNum) : (pageNum - 1) * size;

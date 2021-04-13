@@ -13,6 +13,7 @@ import static cn.hll520.queryfilter.tools.SQLHandleTools.removeBranch;
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午5:21
  */
+@FunctionalInterface
 public interface IQueryFilterHandler {
     /**
      * 增强SQL语句

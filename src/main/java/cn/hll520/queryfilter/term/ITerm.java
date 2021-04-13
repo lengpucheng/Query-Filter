@@ -17,7 +17,7 @@ public interface ITerm {
      *
      * @return 全量条件
      */
-    static ITermQuery queryFilter() {
+    static QueryFilter queryFilter() {
         return ITermQuery.build();
     }
 
@@ -26,7 +26,7 @@ public interface ITerm {
      *
      * @return 排序条件
      */
-    static ITermSort sort() {
+    static TermSort sort() {
         return ITermSort.build();
     }
 
@@ -35,7 +35,7 @@ public interface ITerm {
      *
      * @return 过滤条件
      */
-    static ITermFilter filter() {
+    static TermFilter filter() {
         return ITermFilter.build();
     }
 

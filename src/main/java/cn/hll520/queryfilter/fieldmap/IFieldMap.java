@@ -78,6 +78,5 @@ public interface IFieldMap {
      * @param field 字段
      */
     default void fieldError(String field) {
-
     }
 }

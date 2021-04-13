@@ -1,6 +1,7 @@
 package cn.hll520.queryfilter.term;
 
-import cn.hll520.queryfilter.term.entiry.IFieldSort;
+import cn.hll520.queryfilter.term.entiry.FieldSort;
+import cn.hll520.queryfilter.term.entiry.SortTerm;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -14,11 +15,11 @@ import java.util.List;
  * @since 2021/4/5-下午10:45
  */
 @Data
-public class TermSort implements ITermSort {
+public class TermSort implements ITermSort<FieldSort> {
     /**
      * 字段排序条件集
      */
-    private List<IFieldSort> sorts = new ArrayList<>();
+    private List<FieldSort> sorts = new ArrayList<>();
 
     /**
      * 获取条件排序 条件集
@@ -26,7 +27,18 @@ public class TermSort implements ITermSort {
      * @return 排序条件集 可null
      */
     @Override
-    public List<IFieldSort> acquireTermSorts() {
+    public List<FieldSort> acquireTermSorts() {
         return this.getSorts();
+    }
+
+    /**
+     * 添加单个排序条件
+     *
+     * @param fieldName 排序字段名称
+     * @param sort      排序方法
+     * @return this
+     */
+    public ITermSort<FieldSort> addFieldTerm(String fieldName, SortTerm sort) {
+        return addFieldTerm(new FieldSort(fieldName, sort));
     }
 }

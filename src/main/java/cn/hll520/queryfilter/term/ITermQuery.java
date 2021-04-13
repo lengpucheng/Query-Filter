@@ -1,10 +1,8 @@
 package cn.hll520.queryfilter.term;
 
 import cn.hll520.queryfilter.fieldmap.IFieldMap;
-import cn.hll520.queryfilter.term.entiry.Operate;
-import cn.hll520.queryfilter.term.entiry.SortTerm;
-
-import static cn.hll520.queryfilter.tools.FieldMapTools.map;
+import cn.hll520.queryfilter.term.entiry.IFieldFilter;
+import cn.hll520.queryfilter.term.entiry.IFieldSort;
 
 /**
  * 描述： 条件过滤器接口
@@ -14,14 +12,15 @@ import static cn.hll520.queryfilter.tools.FieldMapTools.map;
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午5:20
  */
-public interface ITermQuery extends ITermFilter, ITermSort, ITermPage {
+public interface ITermQuery<F extends IFieldFilter, S extends IFieldSort>
+        extends ITermFilter<F>, ITermSort<S>, ITermPage {
 
     /**
      * 默认构造一个空的查询过滤
      *
      * @return 查询过滤条件
      */
-    static ITermQuery build() {
+    static QueryFilter build() {
         return new QueryFilter();
     }
 
@@ -32,7 +31,7 @@ public interface ITermQuery extends ITermFilter, ITermSort, ITermPage {
      * @param pageSize 每页大小
      * @return this
      */
-    ITermQuery initializePage(int pageNum, int pageSize);
+    ITermQuery<F, S> initializePage(long pageNum, long pageSize);
 
     /**
      * 转换字段
@@ -40,30 +39,33 @@ public interface ITermQuery extends ITermFilter, ITermSort, ITermPage {
      * @param map 字段转换接口
      * @return 转换后的this
      */
-    default ITermQuery fieldMap(IFieldMap map) {
-        return map(map, this);
+    default ITermQuery<F, S> fieldMap(IFieldMap map) {
+        ITermFilter.super.fieldMap(map);
+        ITermSort.super.fieldMap(map);
+        return this;
     }
 
     /**
-     * 添加单个排序内容
+     * 添加单个条件
      *
-     * @param fieldName 字段名称
-     * @param sort      排序方法
+     * @param f 过滤条件
      * @return this
      */
-    default ITermQuery addFieldTerm(String fieldName, SortTerm sort) {
-        return (ITermQuery) ITermSort.super.addFieldTerm(fieldName, sort);
+    @Override
+    default ITermQuery<F, S> addFieldTerm(F f) {
+        ITermFilter.super.addFieldTerm(f);
+        return this;
     }
 
     /**
-     * 添加单个过滤条件
+     * 添加一个排序条件
      *
-     * @param fieldName 字段名
-     * @param operate   操作
-     * @param value     内容
+     * @param s 排序条件
      * @return this
      */
-    default ITermQuery addFieldTerm(String fieldName, Operate operate, String value) {
-        return (ITermQuery) ITermFilter.super.addFieldTerm(fieldName, operate, value);
+    @Override
+    default ITermQuery<F, S> addFieldTerm(S s) {
+        ITermSort.super.addFieldTerm(s);
+        return this;
     }
 }

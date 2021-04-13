@@ -4,7 +4,6 @@ import cn.hll520.queryfilter.handle.IQueryFilterHandler;
 import cn.hll520.queryfilter.term.ITerm;
 import cn.hll520.queryfilter.term.ITermSort;
 import cn.hll520.queryfilter.term.entiry.IFieldSort;
-import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.util.List;
@@ -18,7 +17,7 @@ import static cn.hll520.queryfilter.tools.CheckSQLTools.checkSQLSort;
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午9:21
  */
-@Component
+@SuppressWarnings("all")
 public class FieldSortHandler implements IQueryFilterHandler {
 
     /**

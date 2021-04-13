@@ -10,29 +10,29 @@ package cn.hll520.queryfilter.term;
 public interface ITermPage extends ITerm {
 
     /**
-     * 获取当前页数
-     *
-     * @return 当前页数
-     */
-    Integer acquirePageNum();
-
-    /**
-     * 获取每页大小
-     *
-     * @return 每页大小
-     */
-    Integer acquireSize();
-
-    /**
      * 构建一个分页条件
      *
      * @param pageNum  页数
      * @param pageSize 每页大小
      * @return 分页条件
      */
-    static ITermPage build(int pageNum, int pageSize) {
+    static ITermPage build(long pageNum, long pageSize) {
         return new TermPage(pageNum, pageSize);
     }
+
+    /**
+     * 获取当前页数
+     *
+     * @return 当前页数
+     */
+    Long acquirePageNum();
+
+    /**
+     * 获取每页大小
+     *
+     * @return 每页大小
+     */
+    Long acquireSize();
 
     /**
      * 设置总数目
@@ -50,5 +50,5 @@ public interface ITermPage extends ITerm {
      * @param pageSize 每页大小
      * @return this
      */
-    ITermPage initializePage(int pageNum, int pageSize);
+    ITermPage initializePage(long pageNum, long pageSize);
 }
