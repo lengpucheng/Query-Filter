@@ -61,12 +61,10 @@ public class InterceptorHandler {
         // 获取参数
         Object params = statementHandler.getParameterHandler().getParameterObject();
 
-
         // 参数不为空时 进行SQL 增强
         if (params != null) {
-            sql = enhance.enhance(sql, params, sqlCmdType, methodName);
+            sql = enhance.enhance(sql, params, sqlCmdType, methodName, invocation);
         }
-
 
         // 刷新SQL 语句
         metaObject.setValue("delegate.boundSql.sql", sql);

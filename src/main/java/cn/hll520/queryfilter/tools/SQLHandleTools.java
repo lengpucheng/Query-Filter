@@ -1,7 +1,13 @@
 package cn.hll520.queryfilter.tools;
 
+import cn.hll520.queryfilter.QueryFilterException;
+import cn.hll520.queryfilter.tools.handle.HandleTools;
+import cn.hll520.queryfilter.tools.handle.HandleToolsMySQL;
+
+import java.util.Locale;
+
 /**
- * 描述： SQL处理相关工具
+ * 描述： SQL处理工具类 自适应不同版本数据库
  *
  * @author lpc
  * @version 1.0 2021/4/5
@@ -9,56 +15,74 @@ package cn.hll520.queryfilter.tools;
  */
 public class SQLHandleTools {
     /**
-     * 移除末尾的分号和空格
-     *
-     * @param sql 语句
-     * @return 移除分号和空格后的sql语句
+     * 是否已经修改过版本
      */
-    public static StringBuilder removeBranch(String sql) {
-        // 去除两边空格
-        sql = sql.trim();
-        int length = sql.length();
-        Character branch = null;
-        // 取最后一个字符
-        if (length > 1) {
-            branch = sql.charAt(length - 1);
+    private static boolean IS_PUT_TYPE = false;
+    /**
+     * 版本型号
+     */
+    private static String SQL_TYPE = "MYSQL";
+    /**
+     * 当前数据库版本的工具库
+     */
+    private static HandleTools handleTools = null;
+
+    /**
+     * 手动修改数据库版本
+     *
+     * @param type 数据库版本 英文
+     */
+    public static void setDBType(String type) {
+        if (IS_PUT_TYPE) {
+            throw new QueryFilterException("已经修改过数据库版本，无法再次修改");
         }
-        // 如果是分号就移除
-        if (branch != null && branch == ';') {
-            sql = sql.substring(0, length - 1).trim();
-            // 继续判断
-            return removeBranch(sql);
-        }
-        return new StringBuilder(sql);
+        IS_PUT_TYPE = true;
+        SQL_TYPE = type.toUpperCase(Locale.ROOT);
     }
 
     /**
-     * 判断是否紧跟Where
+     * 带参数构造
      *
-     * @param sql sql语句
-     * @return 是否紧跟where 是返回true
+     * @param type 数据库版本
+     * @return 切换数据库工具
      */
-    public static boolean isWhere(StringBuilder sql) {
-        int length = sql.length();
-        // 如果小于4（即不可能包括where)
-        if (length < 4) {
-            return false;
+    public static HandleTools build(String type) {
+        if (!IS_PUT_TYPE) {
+            setDBType(type);
+            handleTools = initialize();
         }
-        // 获取最后四个
-        String term = sql.substring(length - 4);
-        // 判断是否紧跟where
-        return "where".equalsIgnoreCase(term);
+        return handleTools;
     }
 
     /**
-     * 检查是否包含 where
-     * <p>若不包含where 将会在 最后补上where</p>
+     * 构建工具库
      *
-     * @param sql sql语句
+     * @return 对应版本的工具库
      */
-    public static boolean checkContainWhere(StringBuilder sql) {
-        // 如果包含就跳过
-        return sql.toString().contains(" where ");
+    public static HandleTools build() {
+        if (handleTools == null) {
+            handleTools = initialize();
+        }
+        return handleTools;
     }
 
+    /**
+     * 初始化数据库处理工具
+     *
+     * @return 处理工具
+     */
+    private static HandleTools initialize() {
+        switch (SQL_TYPE) {
+            case "MYSQL":
+                return new HandleToolsMySQL();
+            case "ORACLE":
+                System.out.println("目前不支持Oracle");
+                break;
+            case "SQLSERVER":
+                System.out.println("目前不支持SQLServer");
+            default:
+                break;
+        }
+        return null;
+    }
 }

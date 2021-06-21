@@ -61,7 +61,7 @@ public class FieldFilter implements IFieldFilter {
      * @return 过滤匹配内容 可null
      */
     @Override
-    public String acquireFieldValue() {
+    public String acquireValue() {
         return this.getValue();
     }
 
@@ -91,7 +91,7 @@ public class FieldFilter implements IFieldFilter {
      * @param fieldValue 过滤内容
      */
     @Override
-    public void receiveFieldValue(String fieldValue) {
+    public void receiveValue(String fieldValue) {
         this.setValue(fieldValue);
     }
 }

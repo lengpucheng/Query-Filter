@@ -4,7 +4,8 @@ import cn.hll520.queryfilter.term.ITerm;
 
 import java.sql.Connection;
 
-import static cn.hll520.queryfilter.tools.SQLHandleTools.removeBranch;
+import static cn.hll520.queryfilter.tools.SQLCheckTools.removeBranch;
+
 
 /**
  * 描述： 条件过滤处理器 用于进行语句增强
@@ -29,15 +30,12 @@ public interface IQueryFilterHandler {
             return sql;
         }
         // 获取去除头尾空格和分号的 SQL 语句
-        StringBuilder sqlEdit = removeBranch(sql).append(" ");
-
-
-        // 处理
-        handle(term, sqlEdit, connection);
-
+        StringBuilder sqlEnhance = new StringBuilder(removeBranch(sql)).append(" ");
+        // 处理增强语句
+        handle(term, sqlEnhance, connection);
         // 添加最后的;
-        sqlEdit.append(" ;");
-        return sqlEdit.toString();
+        sqlEnhance.append(" ;");
+        return sqlEnhance.toString();
     }
 
     /**

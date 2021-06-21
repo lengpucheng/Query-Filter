@@ -33,7 +33,7 @@ import java.util.Properties;
 public class QueryFilterInterceptor implements Interceptor {
 
     /**
-     * 处理器
+     * 默认增强语句处理器
      */
     private final IQueryFilterHandler handler = new DefaultQueryFilterHandler();
 
@@ -61,7 +61,7 @@ public class QueryFilterInterceptor implements Interceptor {
      * @param methodName 方法名称
      * @return 增强后的语句
      */
-    private String enhance(String sql, Object params, SqlCommandType type, String methodName) {
+    private String enhance(String sql, Object params, SqlCommandType type, String methodName,Invocation invocation) {
         ITerm term = null;
         // 获取参数
         if (params instanceof ITerm) {

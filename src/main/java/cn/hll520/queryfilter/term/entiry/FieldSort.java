@@ -1,4 +1,5 @@
 package cn.hll520.queryfilter.term.entiry;
+
 import lombok.Data;
 
 /**
@@ -45,8 +46,18 @@ public class FieldSort implements IFieldSort {
      * @return 可null
      */
     @Override
-    public SortTerm acquireSortTerm() {
+    public SortTerm acquireSort() {
         return this.sort;
+    }
+
+    /**
+     * 接收排序方式
+     *
+     * @param sort 排序方式
+     */
+    @Override
+    public void receiveSort(SortTerm sort) {
+        this.sort = sort;
     }
 
     /**

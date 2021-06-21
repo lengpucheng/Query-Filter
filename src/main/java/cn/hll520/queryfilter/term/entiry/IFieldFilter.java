@@ -29,12 +29,12 @@ public interface IFieldFilter extends IField {
      *
      * @return 过滤匹配内容 可null
      */
-    String acquireFieldValue();
+    String acquireValue();
 
     /**
      * 接收处理后的过滤内容
      *
      * @param fieldValue 过滤内容
      */
-    void receiveFieldValue(String fieldValue);
+    void receiveValue(String fieldValue);
 }

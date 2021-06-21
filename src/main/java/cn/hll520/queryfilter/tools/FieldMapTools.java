@@ -2,6 +2,7 @@ package cn.hll520.queryfilter.tools;
 
 import cn.hll520.queryfilter.fieldmap.IFieldMap;
 import cn.hll520.queryfilter.term.entiry.IField;
+
 /**
  * 描述： 字段转换工具
  *
@@ -18,10 +19,9 @@ public class FieldMapTools {
      * @return 转换后的字段
      */
     public static IField map(IFieldMap fieldMap, IField field) {
-        if (fieldMap == null || field == null || field.acquireFieldName() == null) {
-            return field;
+        if (fieldMap != null && field != null && field.acquireFieldName() != null) {
+            field.receiveFieldName(fieldMap.fieldMap(field.acquireFieldName()));
         }
-        field.receiveFieldName(fieldMap.fieldMap(field.acquireFieldName()));
         return field;
     }
 }

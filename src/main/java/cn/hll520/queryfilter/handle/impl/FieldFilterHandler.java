@@ -10,9 +10,8 @@ import cn.hll520.queryfilter.term.entiry.Operate;
 import java.sql.Connection;
 import java.util.List;
 
-import static cn.hll520.queryfilter.tools.CheckSQLTools.checkSQLFilter;
-import static cn.hll520.queryfilter.tools.SQLHandleTools.checkContainWhere;
-import static cn.hll520.queryfilter.tools.SQLHandleTools.isWhere;
+import static cn.hll520.queryfilter.tools.SQLCheckTools.checkSQLFilter;
+import static cn.hll520.queryfilter.tools.SQLCheckTools.isHaveWhere;
 
 /**
  * 描述： 字段过滤处理器
@@ -60,26 +59,23 @@ public class FieldFilterHandler implements IQueryFilterHandler {
      * @return 是否添加成功
      */
     private boolean addFilter(StringBuilder sql, IFieldFilter filedFilter, boolean isFist) {
-        if (filedFilter == null || filedFilter.acquireFieldName() == null
-                || filedFilter.acquireFieldValue() == null) {
+        if (filedFilter == null || filedFilter.acquireFieldName() == null || filedFilter.acquireValue() == null) {
             return false;
         }
 
-        // sql 语句 构造 是否添加 where
-        if (isFist && !isWhere(sql) && !checkContainWhere(sql)) {
-            // 如果是第一次添加并且非紧跟where 并且不包含 where
+        // 如果是第一次添加且不含where 就添加where
+        if (isFist && !isHaveWhere(sql)) {
             sql.append(" where ");
         } else {
-            //  否则 添加 and
+            // 否则添加 and
             sql.append(" and ");
         }
-
 
         Operate operator = filedFilter.acquireOperate();
         // 若操作符为设置默认为 like
         operator = operator == null ? Operate.like : operator;
 
-        // 添加条件 字段已经通过检查
+        // 添加条件
         sql.append(filedFilter.acquireFieldName());
         // 添加操作
         switch (operator) {
@@ -113,10 +109,11 @@ public class FieldFilterHandler implements IQueryFilterHandler {
             case contains:
                 throw new QueryFilterException("暂时不支持使用 [contains] 进行字段过滤",
                         "使用 [contains] 进行过滤操作时 形式为 contains(filed,value) 可能导致拼接移除" +
-                                " 若需使用 包含或者模糊匹配过滤 请使用 [like] 并将 value 设置为 %value% 格式", sql.toString());
+                                " 若需使用 包含或者模糊匹配过滤 请使用 [like] 并将 value 设置为 %value% 格式",
+                        sql.toString());
         }
         // 添加内容
-        sql.append("'").append(filedFilter.acquireFieldValue()).append("' ");
+        sql.append("'").append(filedFilter.acquireValue()).append("' ");
         return true;
     }
 

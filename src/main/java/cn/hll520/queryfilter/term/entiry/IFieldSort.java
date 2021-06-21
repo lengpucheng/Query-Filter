@@ -13,5 +13,12 @@ public interface IFieldSort extends IField {
      *
      * @return 可null
      */
-    SortTerm acquireSortTerm();
+    SortTerm acquireSort();
+
+    /**
+     * 接收排序方式
+     *
+     * @param sort 排序方式
+     */
+    void receiveSort(SortTerm sort);
 }

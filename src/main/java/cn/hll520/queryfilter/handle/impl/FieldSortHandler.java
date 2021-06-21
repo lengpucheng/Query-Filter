@@ -8,7 +8,7 @@ import cn.hll520.queryfilter.term.entiry.IFieldSort;
 import java.sql.Connection;
 import java.util.List;
 
-import static cn.hll520.queryfilter.tools.CheckSQLTools.checkSQLSort;
+import static cn.hll520.queryfilter.tools.SQLCheckTools.checkSQLSort;
 
 /**
  * 描述： 字段排序处理器
@@ -69,8 +69,8 @@ public class FieldSortHandler implements IQueryFilterHandler {
         // 排序字段 字段已经通过检查
         sql.append(fieldSort.acquireFieldName());
         // 排序方式
-        if (fieldSort.acquireSortTerm() != null) {
-            sql.append(" ").append(fieldSort.acquireSortTerm());
+        if (fieldSort.acquireSort() != null) {
+            sql.append(" ").append(fieldSort.acquireSort());
         }
         // 添加成功返回 true
         return true;
