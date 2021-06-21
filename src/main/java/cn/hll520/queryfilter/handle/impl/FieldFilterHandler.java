@@ -6,8 +6,8 @@ import cn.hll520.queryfilter.term.ITerm;
 import cn.hll520.queryfilter.term.ITermFilter;
 import cn.hll520.queryfilter.term.entiry.IFieldFilter;
 import cn.hll520.queryfilter.term.entiry.Operate;
+import cn.hll520.queryfilter.tools.box.ToolBox;
 
-import java.sql.Connection;
 import java.util.List;
 
 import static cn.hll520.queryfilter.tools.SQLCheckTools.checkSQLFilter;
@@ -26,12 +26,12 @@ public class FieldFilterHandler implements IQueryFilterHandler {
     /**
      * 处理SQL语句
      *
-     * @param term       条件
-     * @param sql        sql语句
-     * @param connection 链接对象
+     * @param term    条件
+     * @param sql     sql语句
+     * @param toolBox 工具箱
      */
     @Override
-    public void handle(ITerm term, StringBuilder sql, Connection connection) {
+    public void handle(ITerm term, StringBuilder sql, ToolBox toolBox) {
         if (!(term instanceof ITermFilter)) {
             return;
         }

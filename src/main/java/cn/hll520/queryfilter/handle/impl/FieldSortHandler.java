@@ -4,8 +4,8 @@ import cn.hll520.queryfilter.handle.IQueryFilterHandler;
 import cn.hll520.queryfilter.term.ITerm;
 import cn.hll520.queryfilter.term.ITermSort;
 import cn.hll520.queryfilter.term.entiry.IFieldSort;
+import cn.hll520.queryfilter.tools.box.ToolBox;
 
-import java.sql.Connection;
 import java.util.List;
 
 import static cn.hll520.queryfilter.tools.SQLCheckTools.checkSQLSort;
@@ -23,12 +23,12 @@ public class FieldSortHandler implements IQueryFilterHandler {
     /**
      * 处理SQL语句
      *
-     * @param term       条件
-     * @param sql        sql语句
-     * @param connection 链接对象
+     * @param term    条件
+     * @param sql     sql语句
+     * @param toolBox 工具箱
      */
     @Override
-    public void handle(ITerm term, StringBuilder sql, Connection connection) {
+    public void handle(ITerm term, StringBuilder sql, ToolBox toolBox) {
         if (!(term instanceof ITermSort)) {
             return;
         }

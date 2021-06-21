@@ -4,13 +4,20 @@ import cn.hll520.queryfilter.handle.IQueryFilterHandler;
 import cn.hll520.queryfilter.handle.InterceptorHandler;
 import cn.hll520.queryfilter.handle.impl.DefaultQueryFilterHandler;
 import cn.hll520.queryfilter.term.ITerm;
+import cn.hll520.queryfilter.term.ITermQuery;
+import cn.hll520.queryfilter.term.QueryFilter;
+import cn.hll520.queryfilter.tools.box.Parameter;
+import cn.hll520.queryfilter.tools.box.ToolBox;
 import lombok.Data;
 import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.plugin.*;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -61,23 +68,38 @@ public class QueryFilterInterceptor implements Interceptor {
      * @param methodName 方法名称
      * @return 增强后的语句
      */
-    private String enhance(String sql, Object params, SqlCommandType type, String methodName,Invocation invocation) {
-        ITerm term = null;
+    private String enhance(String sql, Object params, SqlCommandType type, String methodName, Invocation invocation) {
+        ToolBox toolBox = new ToolBox();
         // 获取参数
-        if (params instanceof ITerm) {
-            term = (ITerm) params;
+        ITermQuery term = null;
+        if (params instanceof ITermQuery) {
+            term = (ITermQuery) params;
         } else if (params instanceof Map) {
             try {
                 Map map = (Map) params;
                 if (map.containsKey("queryFilter"))
-                    term = (ITerm) map.get("queryFilter");
+                    term = (ITermQuery) map.get("queryFilter");
+
+                // 获取参数集合
+                List<ParameterMapping> parameter = ((StatementHandler) invocation.getTarget())
+                        .getBoundSql().getParameterMappings();
+                // 获取参数集合
+                toolBox.setParameters(new ArrayList<>());
+                if (parameter != null) {
+                    parameter.forEach(para -> toolBox.getParameters().add(
+                            new Parameter(para.getProperty(), map.get(para.getProperty()))));
+                }
+
             } catch (Exception e) {
                 // 若出现异常继续之前操作
                 return sql;
             }
         }
+        // 获取待增强的connection
+        toolBox.setConnection((Connection) invocation.getArgs()[0]);
+
         // 增强SQL
-        return handler.enhanceSQL(term, sql, null);
+        return handler.enhanceSQL(term, sql, toolBox);
     }
 
     @Override

@@ -3,8 +3,9 @@ package cn.hll520.queryfilter.handle.impl;
 import cn.hll520.queryfilter.handle.IQueryFilterHandler;
 import cn.hll520.queryfilter.term.ITerm;
 import cn.hll520.queryfilter.term.ITermPage;
+import cn.hll520.queryfilter.tools.box.ToolBox;
 
-import java.sql.Connection;
+
 
 /**
  * 描述： 分页处理器
@@ -15,17 +16,16 @@ import java.sql.Connection;
  * @version 1.0 2021/4/5
  * @since 2021/4/5-下午9:09
  */
-@SuppressWarnings("all")
 public class PageFilterHandler implements IQueryFilterHandler {
     /**
      * 处理SQL语句
      *
      * @param term       条件
      * @param sql        sql语句
-     * @param connection 链接对象
+     * @param toolBox 工具箱
      */
     @Override
-    public void handle(ITerm term, StringBuilder sql, Connection connection) {
+    public void handle(ITerm term, StringBuilder sql, ToolBox toolBox) {
         if (!(term instanceof ITermPage)) {
             return;
         }
