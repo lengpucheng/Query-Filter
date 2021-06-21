@@ -5,7 +5,6 @@ import cn.hll520.queryfilter.handle.InterceptorHandler;
 import cn.hll520.queryfilter.handle.impl.DefaultQueryFilterHandler;
 import cn.hll520.queryfilter.term.ITerm;
 import cn.hll520.queryfilter.term.ITermQuery;
-import cn.hll520.queryfilter.term.QueryFilter;
 import cn.hll520.queryfilter.tools.box.Parameter;
 import cn.hll520.queryfilter.tools.box.ToolBox;
 import lombok.Data;
