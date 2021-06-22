@@ -6,7 +6,7 @@
 
     <groupId>cn.hll520.queryfilter</groupId>
     <artifactId>query-filter</artifactId>
-    <version>1.0.0-preview</version>
+    <version>1.0.0-release</version>
     <description>Mybatis 查询过滤器，包含分页、字段过滤、字段排序（均支持多参数）,并定义了字段映射和转换</description>
 
     <properties>

@@ -82,7 +82,7 @@ public class QueryFilterInterceptor implements Interceptor {
                 // 获取参数集合
                 List<ParameterMapping> parameter = ((StatementHandler) invocation.getTarget())
                         .getBoundSql().getParameterMappings();
-                // 获取参数集合
+                // 设置参数集合
                 toolBox.setParameters(new ArrayList<>());
                 if (parameter != null) {
                     parameter.forEach(para -> toolBox.getParameters().add(
